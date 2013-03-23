@@ -57,7 +57,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
 
         evernoteTimeSheetTextArea.setColumns(20);
         evernoteTimeSheetTextArea.setRows(7);
-        evernoteTimeSheetTextArea.setText("22: 8:30->6:00 - 1h\n\n");
+        evernoteTimeSheetTextArea.setText("22: 8:30->6:00 - 1h\n21: 8:35->5:35 + 2h -1.5h\n20: 8:40->5:00\n\n");
         evernoteTimeSheetTextArea.setAutoscrolls(false);
         jScrollPane1.setViewportView(evernoteTimeSheetTextArea);
 
@@ -186,7 +186,8 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
 
         String[] parts = evernoteTStext.split("\n");
 
-        String regex = "(\\d{1,2}):(\\d{1,2})[:h](\\d{1,2})->(\\d{1,2})[:h](\\d{1,2}).*";
+        String regex = "(\\d{1,2}):(\\d{1,2})[:h](\\d{2})->(\\d{1,2})[:h](\\d{2})"
+                + "([+-]\\dh)?([+-]\\dh)?.*";
         Pattern pattern = Pattern.compile(regex);
 
         Matcher matcher;
@@ -216,11 +217,17 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
             System.out.println(dom);
   
             int startHour = Integer.parseInt(matcher.group(2));
-            String sh = String.format("Start hour: %d\n", startHour);
+            int startMn = Integer.parseInt(matcher.group(3));
+            String sh = String.format("Start hour: %d:%02d\n", startHour, startMn);
             System.out.println(sh);
             
+            int endHour = Integer.parseInt(matcher.group(4));
+            int endMn = Integer.parseInt(matcher.group(5));
+            String eh = String.format("End hour: %d:%02d\n", endHour, endMn);
+            System.out.println(eh);
             
-            
+            System.out.println(matcher.group(6));
+            System.out.println(matcher.group(7));
             
         }
         
