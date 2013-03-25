@@ -57,7 +57,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
 
         evernoteTimeSheetTextArea.setColumns(20);
         evernoteTimeSheetTextArea.setRows(7);
-        evernoteTimeSheetTextArea.setText("22: 8:30->6:00 - 1h\n21: 8:35->5:35 + 2h -1.5h\n20: 8:40->5:00\n\n");
+        evernoteTimeSheetTextArea.setText("22: 8:30->6:00 - 1.5h\n21: 8:35->5:35 + 2h -1.5h\n20: 8:40->5:00\n\n");
         evernoteTimeSheetTextArea.setAutoscrolls(false);
         jScrollPane1.setViewportView(evernoteTimeSheetTextArea);
 
@@ -165,9 +165,9 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
                                 .add(87, 87, 87)
                                 .add(jButton1)))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jLabel14)
-                            .add(jLabel15)))
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel15)
+                            .add(jLabel14)))
                     .add(layout.createSequentialGroup()
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -187,7 +187,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
         String[] parts = evernoteTStext.split("\n");
 
         String regex = "(\\d{1,2}):(\\d{1,2})[:h](\\d{2})->(\\d{1,2})[:h](\\d{2})"
-                + "([+-]\\dh)?([+-]\\dh)?.*";
+                + "([+-][\\d.]h)?([+-]\\dh)?.*";
         Pattern pattern = Pattern.compile(regex);
 
         Matcher matcher;
