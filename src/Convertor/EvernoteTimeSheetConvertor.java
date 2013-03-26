@@ -183,25 +183,29 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         String evernoteTStext = evernoteTimeSheetTextArea.getText();
-
+        
         String[] parts = evernoteTStext.split("\n");
-
+        
         String regex1 = "(\\d{1,2}):(\\d{1,2})[:h](\\d{2})->(\\d{1,2})[:h](\\d{2})"
                 + "(.*)";
-        String regex2 = "([+-]\\d.?\\d?)h(.*)";
-                // ([+-][\\d.]h)?([+-]\\dh)?.*";
+        String regex2 = "[+-](\\d.?\\d?)h(.*)";
+        String regex3 = "(.*)h";
+        
         Pattern pattern = Pattern.compile(regex1);
         Pattern pattern2 = Pattern.compile(regex2);
+        Pattern pattern3 = Pattern.compile(regex3);
         
         Matcher matcher;
         Matcher matcher2;
-        
-        for (int i=0; i<parts.length; i++)
-        {
-            String init = String.format("i:%d\n",i);
-            System.out.print(init);
-            String tmpString = parts[i];
+        Matcher matcher3;
 
+        for (int i = parts.length-1; i>=0; i--) {
+
+            String tmpString = parts[i];
+            System.out.println(tmpString);
+            
+            float workedTimeThatDay = 0;
+            
             //remove all white spaces
             tmpString = tmpString.replaceAll("\\s", "");
             
@@ -211,48 +215,96 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
 
             //we need to isolate the second part here using RE
             matcher = pattern.matcher(tmpString);
-
-            matcher.find();
-//            System.out.println(matcher.group());
-//            System.err.println(matcher.start());
             
-            int dayOfMonth = Integer.parseInt(matcher.group(1));
-            String dom = String.format("Day of month is: %d\n", dayOfMonth);
-//            System.out.println(dom);
-  
+            matcher.find();
+            
+//            int dayOfMonth = Integer.parseInt(matcher.group(1));
+//            String dom = String.format("Day of month is: %d\n", dayOfMonth);
+            
             int startHour = Integer.parseInt(matcher.group(2));
             int startMn = Integer.parseInt(matcher.group(3));
-            String sh = String.format("Start hour: %d:%02d\n", startHour, startMn);
- //           System.out.println(sh);
+//            String sh = String.format("Start hour: %d:%02d\n", startHour, startMn);
             
             int endHour = Integer.parseInt(matcher.group(4));
             int endMn = Integer.parseInt(matcher.group(5));
-            String eh = String.format("End hour: %d:%02d\n", endHour, endMn);
-//            System.out.println(eh);
+//            String eh = String.format("End hour: %d:%02d\n", endHour, endMn);
             
+            float timePresentThatDay = timePresent(startHour, startMn, endHour, endMn); 
+            workedTimeThatDay = timePresentThatDay;
+
+            System.out.println(workedTimeThatDay);
+
             String lastPart = matcher.group(6);
             if (!lastPart.isEmpty()) {
-
-                System.out.println(String.format("last part is %s\n", lastPart));
+                
+                System.out.println(String.format("last part is %s", lastPart));
                 matcher2 = pattern2.matcher(lastPart);
                 matcher2.find();
 
                 String sl = String.format("first part of last part is %s\n", matcher2.group(1));
                 System.out.println(sl);
+
+                if (lastPart.contains("+")) {
+                    
+                    workedTimeThatDay += Float.parseFloat(matcher2.group(1));
+                } else {
+                    workedTimeThatDay -= Float.parseFloat(matcher2.group(1));
+                }
+
+                System.out.println(String.format("Time worked so far: %f" , workedTimeThatDay));
                 
-                String sf = String.format("last part of last part is %s\n", matcher2.group(2));
-                System.out.println(sf);
+                String lastLastPart = matcher2.group(2);
+                if (!lastLastPart.isEmpty()) {
+                    
+                    String sf = String.format("last part of last part is %s\n", matcher2.group(2));
+                    System.out.println(sf);
+                    matcher3 = pattern3.matcher(lastLastPart);
+                    matcher3.find();
+                    
+                    String sll = String.format("final part is %s\n", matcher3.group(1));
+                    System.out.println(sll);
+                    
+                } 
                 
-                
-            }
+            }                 
             
         }
-        
-        
-        
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private float timePresent(int startHour, int startMinute, int endHour, int endMinute) {
+        /* 
+         * This function will take the starting hour, minute and ending hour and minute
+         * and will return the time present at work in fraction of 100
+         */
+        float totalTimePresent;
+        
+        float startMinutePer100 = convertMinTo100(startMinute);
+        float endMinutePer100 = convertMinTo100(endMinute);
+        
+        float startTime = startHour + startMinutePer100;
+
+        float endTime = endHour + endMinutePer100;
+        
+        if (endTime < startTime) {
+            endTime += (float)12;
+        }
+            
+        totalTimePresent = endTime - startTime;
+        return totalTimePresent;
+        
+    }
+    
+    private float convertMinTo100(int minute) {
+        /*
+         * Will convert the minute such as 30mn to fraction of 100
+         * 0.5 in this case
+         */
+        float fraction = (float)minute / (float)60;
+        return fraction;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
