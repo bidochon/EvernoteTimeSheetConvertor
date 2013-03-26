@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
  */
 public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
 
-    /**
+  /**
      * Creates new form EvernoteTimeSheetConvertor
      */
     public EvernoteTimeSheetConvertor() {
@@ -34,22 +34,24 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
         evernoteTimeSheetTextArea = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelMonday = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabelTuesday = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabelWednesday = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabelThursday = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        jLabelFriday = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        jLabelSaturday = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        jLabelSunday = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel1.setText("Evernote Time Sheet");
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -71,102 +73,112 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Monday:");
 
-        jLabel3.setText("N/A");
+        jLabelMonday.setText("N/A");
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("Tuesday");
 
-        jLabel5.setText("N/A");
+        jLabelTuesday.setText("N/A");
 
         jLabel6.setText("Wednesday");
 
-        jLabel7.setText("N/A");
+        jLabelWednesday.setText("N/A");
 
         jLabel8.setText("Thursday");
 
-        jLabel9.setText("N/A");
+        jLabelThursday.setText("N/A");
 
         jLabel10.setText("Friday");
 
-        jLabel11.setText("N/A");
+        jLabelFriday.setText("N/A");
 
         jLabel12.setText("Saturday");
 
-        jLabel13.setText("N/A");
+        jLabelSaturday.setText("N/A");
 
         jLabel14.setText("Sunday");
 
-        jLabel15.setText("N/A");
+        jLabelSunday.setText("N/A");
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel3.setText("PALS");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel1)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(layout.createSequentialGroup()
-                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 342, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton1)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                    .add(jLabel4)
-                    .add(jLabel6)
-                    .add(jLabel8)
-                    .add(jLabel10)
-                    .add(jLabel12)
-                    .add(jLabel14))
+                        .add(0, 0, Short.MAX_VALUE)
+                        .add(jLabel3))
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel1)
+                            .add(layout.createSequentialGroup()
+                                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 342, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jButton1)))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                            .add(jLabel4)
+                            .add(jLabel6)
+                            .add(jLabel8)
+                            .add(jLabel10)
+                            .add(jLabel12)
+                            .add(jLabel14))))
                 .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel3)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel5)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel7)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel9)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel11)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel13)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel15))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabelMonday)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabelTuesday)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabelWednesday)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabelThursday)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabelFriday)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabelSaturday)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabelSunday))
                 .add(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(28, 28, 28)
+                .addContainerGap()
+                .add(jLabel3)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(layout.createSequentialGroup()
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(jLabel2)
-                                    .add(jLabel3))
+                                    .add(jLabelMonday))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(jLabel4)
-                                    .add(jLabel5))
+                                    .add(jLabelTuesday))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(jLabel6)
-                                    .add(jLabel7))
+                                    .add(jLabelWednesday))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(jLabel8)
-                                    .add(jLabel9))
+                                    .add(jLabelThursday))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(jLabel10)
-                                    .add(jLabel11))
+                                    .add(jLabelFriday))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                     .add(jLabel12)
-                                    .add(jLabel13)))
+                                    .add(jLabelSaturday)))
                             .add(layout.createSequentialGroup()
                                 .add(87, 87, 87)
                                 .add(jButton1)))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel15)
+                            .add(jLabelSunday)
                             .add(jLabel14)))
                     .add(layout.createSequentialGroup()
                         .add(jLabel1)
@@ -189,7 +201,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
         String regex1 = "(\\d{1,2}):(\\d{1,2})[:h](\\d{2})->(\\d{1,2})[:h](\\d{2})"
                 + "(.*)";
         String regex2 = "[+-](\\d.?\\d?)h(.*)";
-        String regex3 = "(.*)h";
+        String regex3 = "[+-](.*)h";
         
         Pattern pattern = Pattern.compile(regex1);
         Pattern pattern2 = Pattern.compile(regex2);
@@ -199,8 +211,12 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
         Matcher matcher2;
         Matcher matcher3;
 
-        for (int i = parts.length-1; i>=0; i--) {
+        int numberDay = parts.length;
+        
+        for (int i = numberDay-1, j=0 ; i>=0; i--, j++) {
 
+            int dayOfWeek = j;
+            
             String tmpString = parts[i];
             System.out.println(tmpString);
             
@@ -232,41 +248,73 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
             float timePresentThatDay = timePresent(startHour, startMn, endHour, endMn); 
             workedTimeThatDay = timePresentThatDay;
 
-            System.out.println(workedTimeThatDay);
+//            System.out.println(workedTimeThatDay);
 
             String lastPart = matcher.group(6);
             if (!lastPart.isEmpty()) {
                 
-                System.out.println(String.format("last part is %s", lastPart));
+//                System.out.println(String.format("last part is %s", lastPart));
                 matcher2 = pattern2.matcher(lastPart);
                 matcher2.find();
 
-                String sl = String.format("first part of last part is %s\n", matcher2.group(1));
-                System.out.println(sl);
+//                String sl = String.format("first part of last part is %s\n", matcher2.group(1));
+//                System.out.println(sl);
 
                 if (lastPart.contains("+")) {
-                    
                     workedTimeThatDay += Float.parseFloat(matcher2.group(1));
                 } else {
                     workedTimeThatDay -= Float.parseFloat(matcher2.group(1));
                 }
 
-                System.out.println(String.format("Time worked so far: %f" , workedTimeThatDay));
+//                System.out.println(String.format("Time worked so far: %f" , workedTimeThatDay));
                 
                 String lastLastPart = matcher2.group(2);
                 if (!lastLastPart.isEmpty()) {
                     
-                    String sf = String.format("last part of last part is %s\n", matcher2.group(2));
-                    System.out.println(sf);
+//                    String sf = String.format("last part of last part is %s\n", matcher2.group(2));
+//                    System.out.println(sf);
                     matcher3 = pattern3.matcher(lastLastPart);
                     matcher3.find();
                     
-                    String sll = String.format("final part is %s\n", matcher3.group(1));
-                    System.out.println(sll);
+//                    String sll = String.format("final part is %s\n", matcher3.group(1));
+//                    System.out.println(sll);
+                    
+                    if (lastLastPart.contains("+")) {
+                        workedTimeThatDay += Float.parseFloat(matcher3.group(1));
+                    } else {
+                        workedTimeThatDay -= Float.parseFloat(matcher3.group(1));
+                    }
                     
                 } 
                 
             }                 
+  
+            String sWorkedTimeThatDay = String.format("%.2f", workedTimeThatDay);
+            
+            switch (dayOfWeek) {
+                case 0:
+                    jLabelMonday.setText(sWorkedTimeThatDay);
+                    break;
+                case 1:
+                    jLabelTuesday.setText(sWorkedTimeThatDay);
+                    break;
+                case 2:
+                    jLabelWednesday.setText(sWorkedTimeThatDay);
+                    break;
+                case 3:
+                    jLabelThursday.setText(sWorkedTimeThatDay);
+                    break;
+                case 4:
+                    jLabelFriday.setText(sWorkedTimeThatDay);
+                    break;
+                case 5:
+                    jLabelSaturday.setText(sWorkedTimeThatDay);
+                    break;
+                case 6:
+                    jLabelSunday.setText(sWorkedTimeThatDay);
+                    break;
+                default:
+            }
             
         }
 
@@ -344,19 +392,20 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelFriday;
+    private javax.swing.JLabel jLabelMonday;
+    private javax.swing.JLabel jLabelSaturday;
+    private javax.swing.JLabel jLabelSunday;
+    private javax.swing.JLabel jLabelThursday;
+    private javax.swing.JLabel jLabelTuesday;
+    private javax.swing.JLabel jLabelWednesday;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
