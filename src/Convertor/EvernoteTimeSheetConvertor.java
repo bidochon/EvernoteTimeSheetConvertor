@@ -188,7 +188,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
 
         String regex1 = "(\\d{1,2}):(\\d{1,2})[:h](\\d{2})->(\\d{1,2})[:h](\\d{2})"
                 + "(.*)";
-        String regex2 = "([+-]\\dh\\d{2}).*";
+        String regex2 = "([+-]\\d.?\\d?)h(.*)";
                 // ([+-][\\d.]h)?([+-]\\dh)?.*";
         Pattern pattern = Pattern.compile(regex1);
         Pattern pattern2 = Pattern.compile(regex2);
@@ -239,6 +239,9 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
 
                 String sl = String.format("first part of last part is %s\n", matcher2.group(1));
                 System.out.println(sl);
+                
+                String sf = String.format("last part of last part is %s\n", matcher2.group(2));
+                System.out.println(sf);
                 
                 
             }
