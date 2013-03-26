@@ -186,11 +186,15 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
 
         String[] parts = evernoteTStext.split("\n");
 
-        String regex = "(\\d{1,2}):(\\d{1,2})[:h](\\d{2})->(\\d{1,2})[:h](\\d{2})"
-                + "([+-][\\d.]h)?([+-]\\dh)?.*";
-        Pattern pattern = Pattern.compile(regex);
-
+        String regex1 = "(\\d{1,2}):(\\d{1,2})[:h](\\d{2})->(\\d{1,2})[:h](\\d{2})"
+                + "(.*)";
+        String regex2 = "([+-]\\dh\\d{2}).*";
+                // ([+-][\\d.]h)?([+-]\\dh)?.*";
+        Pattern pattern = Pattern.compile(regex1);
+        Pattern pattern2 = Pattern.compile(regex2);
+        
         Matcher matcher;
+        Matcher matcher2;
         
         for (int i=0; i<parts.length; i++)
         {
@@ -214,20 +218,30 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
             
             int dayOfMonth = Integer.parseInt(matcher.group(1));
             String dom = String.format("Day of month is: %d\n", dayOfMonth);
-            System.out.println(dom);
+//            System.out.println(dom);
   
             int startHour = Integer.parseInt(matcher.group(2));
             int startMn = Integer.parseInt(matcher.group(3));
             String sh = String.format("Start hour: %d:%02d\n", startHour, startMn);
-            System.out.println(sh);
+ //           System.out.println(sh);
             
             int endHour = Integer.parseInt(matcher.group(4));
             int endMn = Integer.parseInt(matcher.group(5));
             String eh = String.format("End hour: %d:%02d\n", endHour, endMn);
-            System.out.println(eh);
+//            System.out.println(eh);
             
-            System.out.println(matcher.group(6));
-            System.out.println(matcher.group(7));
+            String lastPart = matcher.group(6);
+            if (!lastPart.isEmpty()) {
+
+                System.out.println(String.format("last part is %s\n", lastPart));
+                matcher2 = pattern2.matcher(lastPart);
+                matcher2.find();
+
+                String sl = String.format("first part of last part is %s\n", matcher2.group(1));
+                System.out.println(sl);
+                
+                
+            }
             
         }
         
