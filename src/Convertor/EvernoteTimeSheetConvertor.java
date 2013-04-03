@@ -6,18 +6,33 @@ package Convertor;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.Transferable;
+import java.io.*;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 
 /**
  *
  * @author j35
  */
-public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
+public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements ClipboardOwner {
 
-  /**
+    /**
      * Creates new form EvernoteTimeSheetConvertor
      */
     public EvernoteTimeSheetConvertor() {
         initComponents();
+    }
+
+    /**
+     * Empty implementation of the ClipboardOwner interface.
+     */
+    public void lostOwnership(Clipboard aClipboard, Transferable aContents) {
+        //do nothing
     }
 
     /**
@@ -61,6 +76,11 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
         evernoteTimeSheetTextArea.setRows(7);
         evernoteTimeSheetTextArea.setText("22: 8:30->6:00 - 1.5h\n21: 8:35->5:35 + 2h -1.5h\n20: 8:40->5:00\n\n");
         evernoteTimeSheetTextArea.setAutoscrolls(false);
+        evernoteTimeSheetTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                evernoteTimeSheetTextAreaKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(evernoteTimeSheetTextArea);
 
         jButton1.setText("convert");
@@ -193,66 +213,71 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
+        //EvernoteTimeSheetConvertor newTimeSheet = new EvernoteTimeSheetConvertor();
+
+        //display what is currently on the clipboard
+        //System.out.println("Clipboard contains:" + newTimeSheet.getClipboardContents() );
+
         String evernoteTStext = evernoteTimeSheetTextArea.getText();
-        
+
         String[] parts = evernoteTStext.split("\n");
-        
+
         String regex1 = "(\\d{1,2}):(\\d{1,2})[:h](\\d{2})->(\\d{1,2})[:h](\\d{2})"
                 + "(.*)";
         String regex2 = "[+-](\\d.?\\d?)h(.*)";
         String regex3 = "[+-](.*)h";
-        
+
         Pattern pattern = Pattern.compile(regex1);
         Pattern pattern2 = Pattern.compile(regex2);
         Pattern pattern3 = Pattern.compile(regex3);
-        
+
         Matcher matcher;
         Matcher matcher2;
         Matcher matcher3;
 
         int numberDay = parts.length;
-        
-        for (int i = numberDay-1, j=0 ; i>=0; i--, j++) {
+
+        for (int i = numberDay - 1, j = 0; i >= 0; i--, j++) {
 
             int dayOfWeek = j;
-            
+
             String tmpString = parts[i];
             System.out.println(tmpString);
-            
+
             float workedTimeThatDay = 0;
-            
+
             //remove all white spaces
             tmpString = tmpString.replaceAll("\\s", "");
-            
+
             if (!tmpString.contains(":")) {
                 continue;
             }
 
             //we need to isolate the second part here using RE
             matcher = pattern.matcher(tmpString);
-            
+
             matcher.find();
-            
+
 //            int dayOfMonth = Integer.parseInt(matcher.group(1));
 //            String dom = String.format("Day of month is: %d\n", dayOfMonth);
-            
+
             int startHour = Integer.parseInt(matcher.group(2));
             int startMn = Integer.parseInt(matcher.group(3));
 //            String sh = String.format("Start hour: %d:%02d\n", startHour, startMn);
-            
+
             int endHour = Integer.parseInt(matcher.group(4));
             int endMn = Integer.parseInt(matcher.group(5));
 //            String eh = String.format("End hour: %d:%02d\n", endHour, endMn);
-            
-            float timePresentThatDay = timePresent(startHour, startMn, endHour, endMn); 
+
+            float timePresentThatDay = timePresent(startHour, startMn, endHour, endMn);
             workedTimeThatDay = timePresentThatDay;
 
 //            System.out.println(workedTimeThatDay);
 
             String lastPart = matcher.group(6);
             if (!lastPart.isEmpty()) {
-                
+
 //                System.out.println(String.format("last part is %s", lastPart));
                 matcher2 = pattern2.matcher(lastPart);
                 matcher2.find();
@@ -267,30 +292,30 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
                 }
 
 //                System.out.println(String.format("Time worked so far: %f" , workedTimeThatDay));
-                
+
                 String lastLastPart = matcher2.group(2);
                 if (!lastLastPart.isEmpty()) {
-                    
+
 //                    String sf = String.format("last part of last part is %s\n", matcher2.group(2));
 //                    System.out.println(sf);
                     matcher3 = pattern3.matcher(lastLastPart);
                     matcher3.find();
-                    
+
 //                    String sll = String.format("final part is %s\n", matcher3.group(1));
 //                    System.out.println(sll);
-                    
+
                     if (lastLastPart.contains("+")) {
                         workedTimeThatDay += Float.parseFloat(matcher3.group(1));
                     } else {
                         workedTimeThatDay -= Float.parseFloat(matcher3.group(1));
                     }
-                    
-                } 
-                
-            }                 
-  
+
+                }
+
+            }
+
             String sWorkedTimeThatDay = String.format("%.2f", workedTimeThatDay);
-            
+
             switch (dayOfWeek) {
                 case 0:
                     jLabelMonday.setText(sWorkedTimeThatDay);
@@ -315,10 +340,56 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
                     break;
                 default:
             }
-            
+
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void evernoteTimeSheetTextAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_evernoteTimeSheetTextAreaKeyTyped
+        // TODO add your handling code here:
+
+        if (evt.getKeyChar() == 'v' && evt.getModifiers() == 4) {
+
+            EvernoteTimeSheetConvertor newTimeSheet = new EvernoteTimeSheetConvertor();
+
+            evernoteTimeSheetTextArea.setText(newTimeSheet.getClipboardContents());
+
+            //display what is currently on the clipboard
+//        System.out.println("Clipboard contains:" + newTimeSheet.getClipboardContents() );
+
+
+        }
+
+    }//GEN-LAST:event_evernoteTimeSheetTextAreaKeyTyped
+
+    /**
+     * Get the String residing on the clipboard.
+     *
+     * @return any text found on the Clipboard; if none found, return an empty
+     * String.
+     */
+    public String getClipboardContents() {
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        //odd: the Object param of getContents is not currently used
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText =
+                (contents != null)
+                && contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
+            try {
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ex) {
+                //highly unlikely since we are using a standard DataFlavor
+                System.out.println(ex);
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+        return result;
+    }
 
     private float timePresent(int startHour, int startMinute, int endHour, int endMinute) {
         /* 
@@ -326,33 +397,32 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame {
          * and will return the time present at work in fraction of 100
          */
         float totalTimePresent;
-        
+
         float startMinutePer100 = convertMinTo100(startMinute);
         float endMinutePer100 = convertMinTo100(endMinute);
-        
+
         float startTime = startHour + startMinutePer100;
 
         float endTime = endHour + endMinutePer100;
-        
+
         if (endTime < startTime) {
-            endTime += (float)12;
+            endTime += (float) 12;
         }
-            
+
         totalTimePresent = endTime - startTime;
         return totalTimePresent;
-        
+
     }
-    
+
     private float convertMinTo100(int minute) {
         /*
          * Will convert the minute such as 30mn to fraction of 100
          * 0.5 in this case
          */
-        float fraction = (float)minute / (float)60;
+        float fraction = (float) minute / (float) 60;
         return fraction;
     }
-    
-    
+
     /**
      * @param args the command line arguments
      */
