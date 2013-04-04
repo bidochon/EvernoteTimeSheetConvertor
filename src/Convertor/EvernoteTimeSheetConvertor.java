@@ -63,6 +63,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
         jLabel14 = new javax.swing.JLabel();
         jLabelSunday = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,6 +124,8 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel3.setText("PALS");
 
+        jLabel5.setText("(paste: CTRL+V)");
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,12 +140,14 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel1)
                             .add(layout.createSequentialGroup()
-                                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 342, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                    .add(jLabel5)
+                                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 342, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(jButton1)))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                            .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .add(jLabel4)
                             .add(jLabel6)
                             .add(jLabel8)
@@ -204,7 +209,9 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(33, 33, 33)))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel5)
+                        .add(11, 11, 11)))
                 .add(28, 28, 28))
         );
 
@@ -347,14 +354,14 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
 
     private void evernoteTimeSheetTextAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_evernoteTimeSheetTextAreaKeyTyped
         // TODO add your handling code here:
-
+        
         if (evt.getKeyChar() == 'v' && evt.getModifiers() == 4) {
-
+            
             EvernoteTimeSheetConvertor newTimeSheet = new EvernoteTimeSheetConvertor();
 
             evernoteTimeSheetTextArea.setText(newTimeSheet.getClipboardContents());
-
-            //display what is currently on the clipboard
+//
+//            //display what is currently on the clipboard
 //        System.out.println("Clipboard contains:" + newTimeSheet.getClipboardContents() );
 
 
@@ -467,6 +474,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelFriday;
