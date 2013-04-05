@@ -156,7 +156,7 @@
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="7"/>
-            <Property name="text" type="java.lang.String" value="22: 8:30-&gt;6:00 - 1.5h&#xa;21: 8:35-&gt;5:35 + 2h -1.5h&#xa;20: 8:40-&gt;5:00&#xa;&#xa;"/>
+            <Property name="text" type="java.lang.String" value="05: 8:40-&gt;5:30 - 1h&#xa;04: 8:35-&gt;5:30 - 1.25h&#xa;03: 8:30-&gt;4:30&#xa;02: 8:40-&gt;4:00 - 0.75h&#xa;01: 8:40-&gt;5:30 - 1.25h +0.5h&#xa;"/>
             <Property name="autoscrolls" type="boolean" value="false"/>
           </Properties>
           <Events>

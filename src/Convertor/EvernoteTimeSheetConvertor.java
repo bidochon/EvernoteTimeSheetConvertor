@@ -75,7 +75,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
 
         evernoteTimeSheetTextArea.setColumns(20);
         evernoteTimeSheetTextArea.setRows(7);
-        evernoteTimeSheetTextArea.setText("22: 8:30->6:00 - 1.5h\n21: 8:35->5:35 + 2h -1.5h\n20: 8:40->5:00\n\n");
+        evernoteTimeSheetTextArea.setText("05: 8:40->5:30 - 1h\n04: 8:35->5:30 - 1.25h\n03: 8:30->4:30\n02: 8:40->4:00 - 0.75h\n01: 8:40->5:30 - 1.25h +0.5h\n");
         evernoteTimeSheetTextArea.setAutoscrolls(false);
         evernoteTimeSheetTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -365,7 +365,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
 //        System.out.println("Clipboard contains:" + newTimeSheet.getClipboardContents() );
 
 
-        }
+         }
 
     }//GEN-LAST:event_evernoteTimeSheetTextAreaKeyTyped
 
