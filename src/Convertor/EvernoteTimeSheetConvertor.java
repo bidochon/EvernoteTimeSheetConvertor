@@ -228,11 +228,13 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
 
         String evernoteTStext = evernoteTimeSheetTextArea.getText();
 
+        Boolean debugFlag = true;
+
         String[] parts = evernoteTStext.split("\n");
 
         String regex1 = "(\\d{1,2}):(\\d{1,2})[:h](\\d{2})->(\\d{1,2})[:h](\\d{2})"
                 + "(.*)";
-        String regex2 = "[+-](\\d.?\\d?)h(.*)";
+        String regex2 = "([+-])(\\d.?\\d{0,2})h(.*)";
         String regex3 = "[+-](.*)h";
 
         Pattern pattern = Pattern.compile(regex1);
@@ -246,6 +248,10 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
         int numberDay = parts.length;
 
         for (int i = numberDay - 1, j = 0; i >= 0; i--, j++) {
+
+            if (debugFlag) {
+                System.out.println("\n");
+            }
 
             int dayOfWeek = j;
 
@@ -280,41 +286,74 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
             float timePresentThatDay = timePresent(startHour, startMn, endHour, endMn);
             workedTimeThatDay = timePresentThatDay;
 
-//            System.out.println(workedTimeThatDay);
+            if (debugFlag) {
+                System.out.println(String.format("Time worked so far: %f", workedTimeThatDay));
+            }
 
             String lastPart = matcher.group(6);
             if (!lastPart.isEmpty()) {
 
-//                System.out.println(String.format("last part is %s", lastPart));
+                if (debugFlag) {
+                    System.out.println(String.format("last part is %s", lastPart));
+                }
                 matcher2 = pattern2.matcher(lastPart);
                 matcher2.find();
 
-//                String sl = String.format("first part of last part is %s\n", matcher2.group(1));
-//                System.out.println(sl);
-
-                if (lastPart.contains("+")) {
-                    workedTimeThatDay += Float.parseFloat(matcher2.group(1));
-                } else {
-                    workedTimeThatDay -= Float.parseFloat(matcher2.group(1));
+                String sl = String.format("first part of last part is %s", matcher2.group(2));
+                if (debugFlag) {
+                    System.out.println(sl);
                 }
 
-//                System.out.println(String.format("Time worked so far: %f" , workedTimeThatDay));
+                String part = matcher2.group(1);
+                if (part.contains("+")) {
+//                if (lastPart.contains("+")) {
+                    if (debugFlag) {
+                        System.out.println("-> Addition");
+                    }
+                    workedTimeThatDay += Float.parseFloat(matcher2.group(2));
+                } else {
+                    if (debugFlag) {
+                        System.out.println("-> Substraction");
+                    }
+                    workedTimeThatDay -= Float.parseFloat(matcher2.group(2));
+                }
 
-                String lastLastPart = matcher2.group(2);
+                if (debugFlag) {
+                    System.out.println(String.format("Time worked so far: %f", workedTimeThatDay));
+                }
+
+                String lastLastPart = matcher2.group(3);
                 if (!lastLastPart.isEmpty()) {
 
-//                    String sf = String.format("last part of last part is %s\n", matcher2.group(2));
-//                    System.out.println(sf);
+                    if (debugFlag) {
+                        String sf = String.format("last part of last part is %s", lastLastPart);
+                        System.out.println(sf);
+                    }
                     matcher3 = pattern3.matcher(lastLastPart);
                     matcher3.find();
 
-//                    String sll = String.format("final part is %s\n", matcher3.group(1));
-//                    System.out.println(sll);
+                    if (debugFlag) {
+                        String sll = String.format("final part is %s", matcher3.group(1));
+                        System.out.println(sll);
+                    }
+
+                    if (debugFlag) {
+                        String fp = String.format("Worked so far: %f and adding/substracting %f", workedTimeThatDay, Float.parseFloat(matcher3.group(1)));
+                        System.out.println(fp);
+                    }
 
                     if (lastLastPart.contains("+")) {
                         workedTimeThatDay += Float.parseFloat(matcher3.group(1));
+                        if (debugFlag) {
+                            String ll = String.format("After adding, workedTimeThatDay is %f", workedTimeThatDay);
+                            System.out.println(ll);
+                        }
                     } else {
                         workedTimeThatDay -= Float.parseFloat(matcher3.group(1));
+                        if (debugFlag) {
+                            String ll = String.format("After substracting, workedTimeThatDay is %f", workedTimeThatDay);
+                            System.out.println(ll);
+                        }
                     }
 
                 }
@@ -354,9 +393,9 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
 
     private void evernoteTimeSheetTextAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_evernoteTimeSheetTextAreaKeyTyped
         // TODO add your handling code here:
-        
+
         if (evt.getKeyChar() == 'v' && evt.getModifiers() == 4) {
-            
+
             EvernoteTimeSheetConvertor newTimeSheet = new EvernoteTimeSheetConvertor();
 
             evernoteTimeSheetTextArea.setText(newTimeSheet.getClipboardContents());
@@ -365,7 +404,7 @@ public class EvernoteTimeSheetConvertor extends javax.swing.JFrame implements Cl
 //        System.out.println("Clipboard contains:" + newTimeSheet.getClipboardContents() );
 
 
-         }
+        }
 
     }//GEN-LAST:event_evernoteTimeSheetTextAreaKeyTyped
 
